@@ -11,7 +11,7 @@ namespace FrogPay.Domain.Entities
 {
     public abstract class Base
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
 
         internal List<string> _errors;
