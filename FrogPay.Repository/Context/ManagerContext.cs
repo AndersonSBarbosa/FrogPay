@@ -1,7 +1,7 @@
 ﻿using FrogPay.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FrogPay.Infra.Context
+namespace FrogPay.Repository.Context
 {
     public class ManagerContext : DbContext
     {
@@ -11,11 +11,10 @@ namespace FrogPay.Infra.Context
         public ManagerContext(DbContextOptions<ManagerContext> options) : base(options)
         { }
 
-        public virtual DbSet<DadosBancarios> DadosBancarios { get; set; }
-        public virtual DbSet<Endereco> Endereco { get; set; }
-        public virtual DbSet<Loja> Loja { get; set; }
-        public virtual DbSet<Pessoa> Pessoa { get; set; }
-
+        public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<DadosBancarios> DadosBancarios { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Loja> Lojas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,5 +37,4 @@ namespace FrogPay.Infra.Context
         }
 
     }
-
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,6 +7,12 @@
     <UserSecretsId>986cb312-d785-4ab5-8b56-9dcc94746d28</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Token\" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper.EF6" Version="2.1.1" />
@@ -28,14 +34,9 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Token\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FrogPay.Core\FrogPay.Core.csproj" />
     <ProjectReference Include="..\FrogPay.Domain\FrogPay.Domain.csproj" />
-    <ProjectReference Include="..\FrogPay.Infra\FrogPay.Infra.csproj" />
+    <ProjectReference Include="..\FrogPay.Repository\FrogPay.Repository.csproj" />
     <ProjectReference Include="..\FrogPay.Services\FrogPay.Services.csproj" />
   </ItemGroup>
 
