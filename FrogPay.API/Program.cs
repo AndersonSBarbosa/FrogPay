@@ -1,8 +1,12 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FrogPay.Domain.Entities;
 using FrogPay.Repository.Context;
 using FrogPay.Repository.Interfaces;
 using FrogPay.Repository.Repositories;
 using FrogPay.Services.Interfaces;
 using FrogPay.Services.Services;
+using FrogPay.Services.Validator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,9 +15,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
-// Autenticação
+// Inserindo Autenticação
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -35,17 +37,9 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddControllers();
 
-
-// ManagerContext - Conexão com o Banco
-
+// DbContext
 builder.Services.AddDbContext<ManagerContext>(options =>
-{
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("ManagerAPISqlServer"));
-
-    options.UseNpgsql(builder.Configuration.GetConnectionString("ManagerAPISqlServer"));
-
-});
-
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ManagerAPISqlServer")));
 
 #region InjecaoDependencia
 
@@ -66,25 +60,17 @@ builder.Services.AddScoped<IDadosBancariosService, DadosBancariosService>();
 #endregion
 
 // FluentValidation
-//builder.Services.AddTransient<IValidator<Pessoa>, PessoaValidator>();
-//builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddTransient<IValidator<Pessoa>, PessoaValidator>();
+builder.Services.AddFluentValidationAutoValidation();
 
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-
+// Swagger
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "FrogPay Store Registry API",
-        Description = "API para o registro de lojas no FrogPay"
+        Title = "FrogPay API",
+        Description = "API FrogPay Teste Anderson Barbosa"
     });
 
     // Definindo o esquema de segurança
@@ -121,19 +107,23 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "FrogPay Store Registry API v1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "FrogPay API v1");
     });
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
