@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrogPay.API", "FrogPay.API\FrogPay.API.csproj", "{4934EE80-30E0-4C66-8DAA-463C583966BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrogPay.Core", "FrogPay.Core\FrogPay.Core.csproj", "{E9D789DF-3E75-47E5-AA87-F117260ACCF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrogPay.Domain", "FrogPay.Domain\FrogPay.Domain.csproj", "{DAC84F68-E539-43D0-80EB-91C89641B2A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrogPay.Infra", "FrogPay.Infra\FrogPay.Infra.csproj", "{F7865C41-3EC7-4251-B5E8-4A71B888B64F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrogPay.Services", "FrogPay.Services\FrogPay.Services.csproj", "{8D462723-AD03-43AB-847A-C1E2A3F33A9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrogPay.Tests", "FrogPay.Tests\FrogPay.Tests.csproj", "{B7CAF093-C963-437C-BAB4-977573DC8D2C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4934EE80-30E0-4C66-8DAA-463C583966BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4934EE80-30E0-4C66-8DAA-463C583966BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4934EE80-30E0-4C66-8DAA-463C583966BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4934EE80-30E0-4C66-8DAA-463C583966BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9D789DF-3E75-47E5-AA87-F117260ACCF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9D789DF-3E75-47E5-AA87-F117260ACCF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9D789DF-3E75-47E5-AA87-F117260ACCF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9D789DF-3E75-47E5-AA87-F117260ACCF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAC84F68-E539-43D0-80EB-91C89641B2A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAC84F68-E539-43D0-80EB-91C89641B2A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAC84F68-E539-43D0-80EB-91C89641B2A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAC84F68-E539-43D0-80EB-91C89641B2A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7865C41-3EC7-4251-B5E8-4A71B888B64F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7865C41-3EC7-4251-B5E8-4A71B888B64F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7865C41-3EC7-4251-B5E8-4A71B888B64F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7865C41-3EC7-4251-B5E8-4A71B888B64F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D462723-AD03-43AB-847A-C1E2A3F33A9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D462723-AD03-43AB-847A-C1E2A3F33A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D462723-AD03-43AB-847A-C1E2A3F33A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D462723-AD03-43AB-847A-C1E2A3F33A9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7CAF093-C963-437C-BAB4-977573DC8D2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7CAF093-C963-437C-BAB4-977573DC8D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7CAF093-C963-437C-BAB4-977573DC8D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7CAF093-C963-437C-BAB4-977573DC8D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {52470ED0-1F4B-49CB-B659-B78FA9A7DB03}
+	EndGlobalSection
+EndGlobal

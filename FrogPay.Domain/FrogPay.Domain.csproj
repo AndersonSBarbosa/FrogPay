@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.4.0" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FrogPay.Core\FrogPay.Core.csproj" />
+  </ItemGroup>
+
+</Project>
