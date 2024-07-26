@@ -36,5 +36,7 @@ namespace FrogPay.Repository.Context
                 .HasForeignKey(l => l.PessoaId);
         }
 
+
+
     }
 }

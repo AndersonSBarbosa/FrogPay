@@ -1,14 +1,13 @@
-using FluentValidation.AspNetCore;
-using FluentValidation;
-using System.Text;
 using FrogPay.Repository.Context;
 using FrogPay.Repository.Interfaces;
 using FrogPay.Repository.Repositories;
 using FrogPay.Services.Interfaces;
 using FrogPay.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +37,14 @@ builder.Services.AddControllers();
 
 
 // ManagerContext - Conexão com o Banco
-builder.Services.AddDbContext<ManagerContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<ManagerContext>(options =>
+{
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("ManagerAPISqlServer"));
+
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ManagerAPISqlServer"));
+
+});
 
 
 #region InjecaoDependencia
