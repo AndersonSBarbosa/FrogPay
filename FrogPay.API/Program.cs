@@ -76,7 +76,7 @@ builder.Services.AddSingleton(automapperConfig.CreateMapper());
 
 // DbContext
 builder.Services.AddDbContext<ManagerContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("ManagerAPISqlServer")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ManagerAPIPostgre")));
 
 #region InjecaoDependencia
 

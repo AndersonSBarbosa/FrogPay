@@ -12,9 +12,9 @@ namespace FrogPay.Repository.Context
         { }
 
         public DbSet<Pessoa> Pessoa { get; set; }
-        public DbSet<DadosBancarios> DadosBancarios { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
-        public DbSet<Loja> Lojas { get; set; }
+        public DbSet<DadosBancarios> DadosBancario { get; set; }
+        public DbSet<Endereco> Endereco { get; set; }
+        public DbSet<Loja> Loja { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

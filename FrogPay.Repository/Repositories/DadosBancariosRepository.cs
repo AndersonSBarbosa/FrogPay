@@ -17,7 +17,7 @@ namespace FrogPay.Repository.Repositories
         {
             try
             {
-                var dadosBancarios = await _context.DadosBancarios
+                var dadosBancarios = await _context.DadosBancario
                     .FirstOrDefaultAsync(x => x.PessoaId == idPessoa);
 
                 if (dadosBancarios == null)

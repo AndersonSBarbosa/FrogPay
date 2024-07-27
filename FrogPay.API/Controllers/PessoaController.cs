@@ -11,23 +11,16 @@ namespace FrogPay.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class PessoaController : ControllerBase
     {
         private readonly IPessoaService _pessoaService;
         private readonly IMapper _mapper;
 
-        public IPessoaService Object { get; }
-
         public PessoaController(IPessoaService pessoaService, IMapper mapper)
         {
             _pessoaService = pessoaService;
             _mapper=mapper;
-        }
-
-        public PessoaController(IPessoaService @object)
-        {
-            Object=@object;
         }
 
         // GET: api/pessoa/{id}

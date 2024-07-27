@@ -22,7 +22,7 @@ namespace FrogPay.Repository.Repositories
         {
             try
             {
-                var endereco = await _context.Enderecos.FirstOrDefaultAsync(x => x.PessoaId == idPessoa);
+                var endereco = await _context.Endereco.FirstOrDefaultAsync(x => x.PessoaId == idPessoa);
 
                 if (endereco == null)
                 {

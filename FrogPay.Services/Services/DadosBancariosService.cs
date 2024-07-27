@@ -56,10 +56,10 @@ namespace FrogPay.Services.Services
         {
             try
             {
-                var itemExists = await GetDadosBancariosByIdPessoa(dadosBancarios.Id);
+                //var itemExists = await GetDadosBancariosByIdPessoa(dadosBancarios.Id);
 
-                if (itemExists == null)
-                    throw new DomainExceptions("não existe Dados Bancarios com esse ID informado!");
+                //if (itemExists == null)
+                //    throw new DomainExceptions("não existe Dados Bancarios com esse ID informado!");
 
                 var itemUpdate = await _dadosBancariosRepository.UpdateAsync(_mapper.Map<DadosBancarios>(dadosBancarios));
 
