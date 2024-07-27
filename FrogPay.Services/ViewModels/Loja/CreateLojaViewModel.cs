@@ -1,8 +1,6 @@
-﻿using FrogPay.Domain.Interfaces;
-
-namespace FrogPay.Domain.Entities
+﻿namespace FrogPay.Services.ViewModels.Loja
 {
-    public class Loja : Base
+    public class CreateLojaViewModel
     {
         public long PessoaId { get; set; }
         public string NomeFantasia { get; set; }

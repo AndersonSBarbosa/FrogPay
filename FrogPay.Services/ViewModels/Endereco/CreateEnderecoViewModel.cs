@@ -1,13 +1,6 @@
-﻿using FrogPay.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FrogPay.Domain.Entities
+﻿namespace FrogPay.Services.ViewModels.Endereco
 {
-    public class Endereco : Base
+    public class CreateEnderecoViewModel
     {
         public long PessoaId { get; set; }
         public string Uf { get; set; }

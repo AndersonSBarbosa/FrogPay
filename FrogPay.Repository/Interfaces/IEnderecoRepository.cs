@@ -4,6 +4,6 @@ namespace FrogPay.Repository.Interfaces
 {
     public interface IEnderecoRepository : IBaseRepository<Endereco>
     {
-        Task<Endereco> GetEnderecoByIdPessoaAsync(Guid idPessoa);
+        Task<Endereco> GetEnderecoByIdPessoaAsync(long idPessoa);
     }
 }

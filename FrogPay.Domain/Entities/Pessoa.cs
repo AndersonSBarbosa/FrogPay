@@ -2,7 +2,7 @@
 
 namespace FrogPay.Domain.Entities
 {
-    public class Pessoa : Base, IAggregateRoot
+    public class Pessoa : Base
     {
         public string Nome { get; set; }
         public string Cpf { get; set; }
@@ -12,9 +12,5 @@ namespace FrogPay.Domain.Entities
         public ICollection<DadosBancarios> DadosBancario { get; set; }
         public ICollection<Endereco> Endereco { get; set; }
         public ICollection<Loja> Loja { get; set; }
-        public bool Validate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

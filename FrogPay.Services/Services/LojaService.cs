@@ -19,10 +19,10 @@ namespace FrogPay.Services.Services
             {
                 throw new ArgumentNullException(nameof(loja));
             }
-            if (loja.Id == Guid.Empty)
-            {
-                loja.Id = Guid.NewGuid();
-            }
+            //if (loja.Id == Guid.Empty)
+            //{
+            //    loja.Id = Guid.NewGuid();
+            //}
             try
             {
                 await _lojaRepository.CreateAsync(loja);
@@ -33,12 +33,12 @@ namespace FrogPay.Services.Services
             }
         }
 
-        public async Task<Loja> GetLojaByIdAsync(Guid id)
+        public async Task<Loja> GetLojaByIdAsync(long id)
         {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentException("ID inválido", nameof(id));
-            }
+            //if (id == Guid.Empty)
+            //{
+            //    throw new ArgumentException("ID inválido", nameof(id));
+            //}
 
             try
             {

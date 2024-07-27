@@ -13,7 +13,7 @@ namespace FrogPay.Repository.Repositories
             _context=context;
         }
 
-        public async Task<DadosBancarios> GetDadosBancariosByIdPessoaAsync(Guid idPessoa)
+        public async Task<DadosBancarios> GetDadosBancariosByIdPessoaAsync(long idPessoa)
         {
             try
             {

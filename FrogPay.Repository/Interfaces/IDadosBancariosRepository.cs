@@ -4,6 +4,6 @@ namespace FrogPay.Repository.Interfaces
 {
     public interface IDadosBancariosRepository : IBaseRepository<DadosBancarios>
     {
-        Task<DadosBancarios> GetDadosBancariosByIdPessoaAsync(Guid idPessoa);
+        Task<DadosBancarios> GetDadosBancariosByIdPessoaAsync(long idPessoa);
     }
 }

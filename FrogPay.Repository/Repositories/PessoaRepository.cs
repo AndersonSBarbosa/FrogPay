@@ -17,7 +17,7 @@ namespace FrogPay.Repository.Repositories
         {
             try
             {
-                var pessoa = await _context.Pessoas
+                var pessoa = await _context.Pessoa
                     .FirstOrDefaultAsync(p => EF.Functions.Like(p.Nome, $"%{name}%"));
 
                 if (pessoa == null)

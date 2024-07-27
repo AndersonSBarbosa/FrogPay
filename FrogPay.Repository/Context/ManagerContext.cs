@@ -11,7 +11,7 @@ namespace FrogPay.Repository.Context
         public ManagerContext(DbContextOptions<ManagerContext> options) : base(options)
         { }
 
-        public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<DadosBancarios> DadosBancarios { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Loja> Lojas { get; set; }

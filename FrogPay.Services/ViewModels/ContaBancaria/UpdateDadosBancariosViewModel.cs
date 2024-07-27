@@ -1,9 +1,8 @@
-﻿using FrogPay.Domain.Interfaces;
-
-namespace FrogPay.Domain.Entities
+﻿namespace FrogPay.Services.ViewModels.ContaBancaria
 {
-    public class DadosBancarios : Base
+    public class UpdateDadosBancariosViewModel
     {
+        public long Id { get; set; }
         public long PessoaId { get; set; }
         public string CodigoBanco { get; set; }
         public string Agencia { get; set; }

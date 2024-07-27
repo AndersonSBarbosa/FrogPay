@@ -33,12 +33,12 @@ namespace FrogPay.Services.Services
                 }
             }
 
-            public async Task<Endereco> GetEnderecoByIdPessoa(Guid id)
+            public async Task<Endereco> GetEnderecoByIdPessoa(long id)
             {
-                if (id == Guid.Empty)
-                {
-                    throw new ArgumentException("ID inválido", nameof(id));
-                }
+                //if (id == Guid.Empty)
+                //{
+                //    throw new ArgumentException("ID inválido", nameof(id));
+                //}
 
                 try
                 {

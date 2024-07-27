@@ -1,13 +1,11 @@
-﻿using FrogPay.Domain.Interfaces;
-
-namespace FrogPay.Domain.Entities
+﻿namespace FrogPay.Services.ViewModels.Loja
 {
-    public class Loja : Base
+    public class UpdateLojaViewModel
     {
+        public long Id { get; set; }
         public long PessoaId { get; set; }
         public string NomeFantasia { get; set; }
         public string RazaoSocial { get; set; }
         public string Cnpj { get; set; }
-        public DateTime DataAbertura { get; set; }
     }
 }

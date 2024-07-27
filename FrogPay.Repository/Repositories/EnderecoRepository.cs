@@ -18,7 +18,7 @@ namespace FrogPay.Repository.Repositories
             _context=context;
         }
 
-        public async Task<Endereco> GetEnderecoByIdPessoaAsync(Guid idPessoa)
+        public async Task<Endereco> GetEnderecoByIdPessoaAsync(long idPessoa)
         {
             try
             {

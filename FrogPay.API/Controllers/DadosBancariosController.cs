@@ -1,5 +1,10 @@
-﻿using FrogPay.Domain.Entities;
+﻿using FrogPay.API.Utilities;
+using FrogPay.Core.Exceptions;
+using FrogPay.Domain.Entities;
 using FrogPay.Services.Interfaces;
+using FrogPay.Services.Services;
+using FrogPay.Services.ViewModels;
+using FrogPay.Services.ViewModels.ContaBancaria;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +24,7 @@ namespace FrogPay.API.Controllers
 
         // GET: api/v1/dadosbancarios/{id}
         [HttpGet]
-        public async Task<IActionResult> GetDadosBancariosByIdPessoa(Guid id)
+        public async Task<IActionResult> GetDadosBancariosByIdPessoa(long id)
         {
             try
             {
@@ -38,41 +43,51 @@ namespace FrogPay.API.Controllers
 
         // POST: api/v1/dadosbancarios
         [HttpPost]
-        public async Task<IActionResult> CreateDadosBancarios([FromBody] DadosBancarios dadosBancarios)
+        public async Task<IActionResult> CreateDadosBancarios([FromBody] CreateDadosBancariosViewModel dadosBancarios)
         {
-            if (dadosBancarios == null)
-            {
-                return BadRequest("Dados bancários são obrigatórios");
-            }
-
             try
             {
-                await _dadosBancariosService.CreateDadosBancariosAsync(dadosBancarios);
-                return CreatedAtAction(nameof(GetDadosBancariosByIdPessoa), new { id = dadosBancarios.PessoaId }, dadosBancarios);
+                var itemCreated = await _dadosBancariosService.CreateDadosBancariosAsync(dadosBancarios);
+                return Ok(new ResultViewModel
+                {
+                    Message = "Item criado com sucesso!",
+                    Success = true,
+                    Data = itemCreated
+                });
+
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao criar os dados bancários: {ex.Message}");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
 
         // PUT: api/v1/dadosbancarios/{id}
         [HttpPut]
-        public async Task<IActionResult> UpdateDadosBancarios(Guid id, [FromBody] DadosBancarios dadosBancarios)
+        public async Task<IActionResult> UpdateDadosBancarios([FromBody] UpdateDadosBancariosViewModel dadosBancarios)
         {
-            if (dadosBancarios == null || dadosBancarios.PessoaId != id)
-            {
-                return BadRequest("Dados bancários são inválidos");
-            }
-
             try
             {
-                await _dadosBancariosService.UpdateDadosBancariosAsync(dadosBancarios);
-                return NoContent();
+                var itemUpdate = await _dadosBancariosService.UpdatePessoaAsync(dadosBancarios);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Item atualizado com sucesso!",
+                    Success = true,
+                    Data = itemUpdate
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao atualizar os dados bancários: {ex.Message}");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
     }

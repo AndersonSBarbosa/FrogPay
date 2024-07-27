@@ -1,5 +1,10 @@
-﻿using FrogPay.Domain.Entities;
+﻿using FrogPay.API.Utilities;
+using FrogPay.Core.Exceptions;
+using FrogPay.Domain.Entities;
 using FrogPay.Services.Interfaces;
+using FrogPay.Services.Services;
+using FrogPay.Services.ViewModels;
+using FrogPay.Services.ViewModels.Loja;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +24,7 @@ namespace FrogPay.API.Controllers
 
         // GET: api/loja
         [HttpGet]
-        public async Task<IActionResult> GetLojaById(Guid id)
+        public async Task<IActionResult> GetLojaById(long id)
         {
             try
             {
@@ -38,41 +43,51 @@ namespace FrogPay.API.Controllers
 
         // POST: api/loja
         [HttpPost]
-        public async Task<IActionResult> CreateLoja([FromBody] Loja loja)
+        public async Task<IActionResult> CreateLoja([FromBody] CreateLojaViewModel loja)
         {
-            if (loja == null)
-            {
-                return BadRequest("Dados da loja são obrigatórios");
-            }
-
             try
             {
-                await _lojaService.CreateLojaAsync(loja);
-                return CreatedAtAction(nameof(GetLojaById), new { id = loja.Id }, loja);
+                var itemCreated = await await _lojaService.CreateLojaAsync(loja);
+                return Ok(new ResultViewModel
+                {
+                    Message = "Item criado com sucesso!",
+                    Success = true,
+                    Data = itemCreated
+                });
+
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao criar a loja: {ex.Message}");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
 
         // PUT: api/loja
         [HttpPut]
-        public async Task<IActionResult> UpdateLoja(Guid id, [FromBody] Loja loja)
+        public async Task<IActionResult> UpdateLoja([FromBody] Loja loja)
         {
-            if (loja == null || loja.Id != id)
-            {
-                return BadRequest("Dados da loja são inválidos");
-            }
-
             try
             {
-                await _lojaService.UpdateLojaAsync(loja);
-                return NoContent();
+                var itemUpdate = await _lojaService.UpdateLojaAsync(loja);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Item atualizado com sucesso!",
+                    Success = true,
+                    Data = itemUpdate
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao atualizar a loja: {ex.Message}");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
     }

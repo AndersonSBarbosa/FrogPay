@@ -1,7 +1,10 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
+using FrogPay.Core.Exceptions;
 using FrogPay.Domain.Entities;
 using FrogPay.Repository.Interfaces;
 using FrogPay.Services.Interfaces;
+using FrogPay.Services.ViewModels.Pessoa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,38 +15,28 @@ namespace FrogPay.Services.Services
 {
     public class PessoaService : IPessoaService
     {
+        private readonly IMapper _mapper;
         private readonly IPessoaRepository _pessoaRepository;
         private readonly IValidator<Pessoa> _validator;
 
-        public PessoaService(IPessoaRepository pessoaRepository, IValidator<Pessoa> validator)
+        public PessoaService(IPessoaRepository pessoaRepository, IValidator<Pessoa> validator, IMapper mapper)
         {
             _pessoaRepository = pessoaRepository;
             _validator = validator;
+            _mapper=mapper;
         }
 
-        public async Task CreatePessoaAsync(Pessoa pessoa)
+        public async Task<Pessoa> CreatePessoaAsync(CreatePessoaViewModel pessoa)
         {
-            if (pessoa == null)
-            {
-                throw new ArgumentNullException(nameof(pessoa));
-            }
-            if (pessoa.Id == Guid.Empty)
-            {
-                pessoa.Id = Guid.NewGuid();
-            }
-
-            var validation = await _validator.ValidateAsync(pessoa);
-            if (!validation.IsValid)
-            {
-                throw new ValidationException(validation.Errors);
-            }
-
+            
             //Garantir a data de nascimento apenas dia/mes/ano
             pessoa.DataNascimento = pessoa.DataNascimento.Date;
 
             try
             {
-                await _pessoaRepository.CreateAsync(pessoa);
+                var item = _mapper.Map<Pessoa>(pessoa);
+                var ItemCreated =await _pessoaRepository.CreateAsync(item);
+                return ItemCreated;
             }
 
             catch (Exception ex)
@@ -52,12 +45,12 @@ namespace FrogPay.Services.Services
             }
         }
 
-        public async Task<Pessoa> GetPessoaByIdAsync(Guid id)
+        public async Task<Pessoa> GetPessoaByIdAsync(long id)
         {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentException("ID inválido", nameof(id));
-            }
+            //if (id == Guid.Empty)
+            //{
+            //    throw new ArgumentException("ID inválido", nameof(id));
+            //}
 
             try
             {
@@ -83,16 +76,18 @@ namespace FrogPay.Services.Services
             }
         }
 
-        public async Task UpdatePessoaAsync(Pessoa pessoa)
+        public async Task<Pessoa> UpdatePessoaAsync(UpdatePessoaViewModel pessoa)
         {
-            if (pessoa == null)
-            {
-                throw new ArgumentNullException(nameof(pessoa));
-            }
-
             try
             {
-                await _pessoaRepository.UpdateAsync(pessoa);
+                var itemExists = await GetPessoaByIdAsync(pessoa.Id);
+
+                if (itemExists == null)
+                    throw new DomainExceptions("não existe usuario com esse ID informado!");
+
+                var itemUpdate = await _pessoaRepository.UpdateAsync(_mapper.Map<Pessoa>(pessoa));
+
+                return itemUpdate;
             }
             catch (Exception ex)
             {

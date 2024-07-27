@@ -30,12 +30,12 @@ namespace FrogPay.Services.Services
             }
         }
 
-        public async Task<DadosBancarios> GetDadosBancariosByIdPessoa(Guid id)
+        public async Task<DadosBancarios> GetDadosBancariosByIdPessoa(long id)
         {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentException("ID inválido", nameof(id));
-            }
+            //if (id == Guid.Empty)
+            //{
+            //    throw new ArgumentException("ID inválido", nameof(id));
+            //}
 
             try
             {

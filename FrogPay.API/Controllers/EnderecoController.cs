@@ -1,5 +1,9 @@
-﻿using FrogPay.Domain.Entities;
+﻿using FrogPay.API.Utilities;
+using FrogPay.Core.Exceptions;
+using FrogPay.Domain.Entities;
 using FrogPay.Services.Interfaces;
+using FrogPay.Services.Services;
+using FrogPay.Services.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +23,7 @@ namespace FrogPay.API.Controllers
 
         // GET: api/v1/endereco/{id}
         [HttpGet]
-        public async Task<IActionResult> GetEnderecoByIdPessoa(Guid id)
+        public async Task<IActionResult> GetEnderecoByIdPessoa(long id)
         {
             try
             {
@@ -40,39 +44,49 @@ namespace FrogPay.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEndereco([FromBody] Endereco endereco)
         {
-            if (endereco == null)
-            {
-                return BadRequest("Dados do endereço são obrigatórios.");
-            }
-
             try
             {
-                await _enderecoService.CreateEnderecoAsync(endereco);
-                return CreatedAtAction(nameof(GetEnderecoByIdPessoa), new { id = endereco.PessoaId }, endereco);
+                var itemCreated = await _enderecoService.CreateEnderecoAsync(endereco);
+                return Ok(new ResultViewModel
+                {
+                    Message = "Item criado com sucesso!",
+                    Success = true,
+                    Data = itemCreated
+                });
+
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao criar o endereço: {ex.Message}");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
 
         // PUT: api/v1/endereco/{id}
         [HttpPut]
-        public async Task<IActionResult> UpdateEndereco(Guid id, [FromBody] Endereco endereco)
+        public async Task<IActionResult> UpdateEndereco(long id, [FromBody] Endereco endereco)
         {
-            if (endereco == null || endereco.PessoaId != id)
-            {
-                return BadRequest("Dados do endereço são inválidos.");
-            }
-
             try
             {
-                await _enderecoService.UpdateEnderecoAsync(endereco);
-                return NoContent();
+                var itemUpdate = await _enderecoService.UpdateEnderecoAsync(endereco);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Item atualizado com sucesso!",
+                    Success = true,
+                    Data = itemUpdate
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao atualizar o endereço: {ex.Message}");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
 

@@ -1,3 +1,4 @@
+using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using FrogPay.Domain.Entities;
@@ -7,6 +8,10 @@ using FrogPay.Repository.Repositories;
 using FrogPay.Services.Interfaces;
 using FrogPay.Services.Services;
 using FrogPay.Services.Validator;
+using FrogPay.Services.ViewModels.ContaBancaria;
+using FrogPay.Services.ViewModels.Endereco;
+using FrogPay.Services.ViewModels.Loja;
+using FrogPay.Services.ViewModels.Pessoa;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -36,6 +41,29 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddControllers();
+
+#region AutoMapper
+var automapperConfig = new MapperConfiguration(cfg =>
+{
+
+    cfg.CreateMap<CreatePessoaViewModel, Pessoa>().ReverseMap();
+    cfg.CreateMap<UpdatePessoaViewModel, Pessoa>().ReverseMap();
+
+    cfg.CreateMap<CreateDadosBancariosViewModel, DadosBancarios>().ReverseMap();
+    cfg.CreateMap<UpdateDadosBancariosViewModel, DadosBancarios>().ReverseMap();
+
+    cfg.CreateMap<CreateEnderecoViewModel, Endereco>().ReverseMap();
+    cfg.CreateMap<UpdateEnderecoViewModel, Endereco>().ReverseMap();
+
+    cfg.CreateMap<CreateLojaViewModel, Loja>().ReverseMap();
+    cfg.CreateMap<UpdateLojaViewModel, Loja>().ReverseMap();
+
+});
+
+builder.Services.AddSingleton(automapperConfig.CreateMapper());
+#endregion
+
+
 
 // DbContext
 builder.Services.AddDbContext<ManagerContext>(options =>

@@ -1,5 +1,10 @@
-﻿using FrogPay.Domain.Entities;
+﻿using AutoMapper;
+using FrogPay.API.Utilities;
+using FrogPay.Core.Exceptions;
+using FrogPay.Domain.Entities;
 using FrogPay.Services.Interfaces;
+using FrogPay.Services.ViewModels;
+using FrogPay.Services.ViewModels.Pessoa;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,19 +12,21 @@ namespace FrogPay.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PessoaController : ControllerBase
     {
         private readonly IPessoaService _pessoaService;
+        private readonly IMapper _mapper;
 
-        public PessoaController(IPessoaService pessoaService)
+        public PessoaController(IPessoaService pessoaService, IMapper mapper)
         {
             _pessoaService = pessoaService;
+            _mapper=mapper;
         }
 
         // GET: api/pessoa/{id}
         [HttpGet]
-        public async Task<IActionResult> GetPessoaById(Guid id)
+        public async Task<IActionResult> GetPessoaById(long id)
         {
             try
             {
@@ -38,41 +45,52 @@ namespace FrogPay.API.Controllers
 
         // POST: api/pessoa
         [HttpPost]
-        public async Task<IActionResult> CreatePessoa([FromBody] Pessoa pessoa)
+        public async Task<IActionResult> CreatePessoa([FromBody] CreatePessoaViewModel pessoa)
         {
-            if (pessoa == null)
-            {
-                return BadRequest("Dados da pessoa são obrigatórios");
-            }
+            try 
+            { 
+                var userCreated = await _pessoaService.CreatePessoaAsync(pessoa);
+                return Ok(new ResultViewModel
+                {
+                    Message = "Usuário criado com sucesso!",
+                    Success = true,
+                    Data = userCreated
+                });
 
-            try
+            }
+            catch (DomainExceptions ex)
             {
-                await _pessoaService.CreatePessoaAsync(pessoa);
-                return CreatedAtAction(nameof(GetPessoaById), new { id = pessoa.Id }, pessoa);
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao criar a pessoa: {ex.Message}");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
 
         // PUT: api/pessoa/{id}
         [HttpPut]
-        public async Task<IActionResult> UpdatePessoa(Guid id, [FromBody] Pessoa pessoa)
+        public async Task<IActionResult> UpdatePessoa([FromBody] UpdatePessoaViewModel pessoa)
         {
-            if (pessoa == null || pessoa.Id != id)
-            {
-                return BadRequest("Dados Invalidos");
-            }
-
             try
             {
-                await _pessoaService.UpdatePessoaAsync(pessoa);
-                return NoContent();
+                var item = await _pessoaService.UpdatePessoaAsync(pessoa);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "usuário atualizado com sucesso!",
+                    Success = true,
+                    Data = item
+                });
+
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao atualizar: {ex.Message}");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
 

@@ -17,10 +17,19 @@ namespace FrogPay.Repository.Repositories
 
         public virtual async Task<T> CreateAsync(T obj)
         {
-            _context.Add(obj);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Add(obj);
+                await _context.SaveChangesAsync();
 
-            return obj;
+                return obj;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
 
         public virtual async Task<T> UpdateAsync(T obj)
@@ -31,7 +40,7 @@ namespace FrogPay.Repository.Repositories
             return obj;
         }
 
-        public virtual async Task RemoveAsync(Guid id)
+        public virtual async Task RemoveAsync(long id)
         {
             var obj = await GetAsync(id);
 
@@ -42,7 +51,7 @@ namespace FrogPay.Repository.Repositories
             }
         }
 
-        public virtual async Task<T> GetAsync(Guid id)
+        public virtual async Task<T> GetAsync(long id)
         {
             var obj = await _context.Set<T>()
                                     .AsNoTracking()
