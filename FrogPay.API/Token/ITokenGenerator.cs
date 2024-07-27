@@ -2,6 +2,8 @@
 {
     public interface ITokenGenerator
     {
-        string GenerateToken();
+        string GenerateTokenV2();
+
+        string GenerateJwtToken();
     }
 }

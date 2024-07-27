@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FrogPay.API.Utilities;
 using FrogPay.Core.Exceptions;
-using FrogPay.Domain.Entities;
 using FrogPay.Services.Interfaces;
 using FrogPay.Services.ViewModels;
 using FrogPay.Services.ViewModels.Pessoa;
@@ -12,7 +11,7 @@ namespace FrogPay.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class PessoaController : ControllerBase
     {
         private readonly IPessoaService _pessoaService;
