@@ -72,7 +72,7 @@ namespace FrogPay.API.Controllers
         {
             try
             {
-                var itemUpdate = await _dadosBancariosService.UpdatePessoaAsync(dadosBancarios);
+                var itemUpdate = await _dadosBancariosService.UpdateDadosBancariosAsync(dadosBancarios);
 
                 return Ok(new ResultViewModel
                 {

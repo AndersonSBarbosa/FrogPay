@@ -43,7 +43,7 @@ namespace FrogPay.API.Controllers
 
         // POST: api/v1/endereco
         [HttpPost]
-        public async Task<IActionResult> CreateEndereco([FromBody] Endereco endereco)
+        public async Task<IActionResult> CreateEndereco([FromBody] CreateEnderecoViewModel endereco)
         {
             try
             {

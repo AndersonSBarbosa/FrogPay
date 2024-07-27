@@ -47,7 +47,7 @@ namespace FrogPay.API.Controllers
         {
             try
             {
-                var itemCreated = await await _lojaService.CreateLojaAsync(loja);
+                var itemCreated = await _lojaService.CreateLojaAsync(loja);
                 return Ok(new ResultViewModel
                 {
                     Message = "Item criado com sucesso!",

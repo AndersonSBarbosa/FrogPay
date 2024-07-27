@@ -55,7 +55,7 @@ namespace FrogPay.Tests.ControllersTest
         public async Task CriarEndereco_Valido_DeveRetornarStatusCode201()
         {
             // Arrange
-            var endereco = new Endereco { PessoaId = new Randomizer().Long(0, 3000), Logradouro = "Rua Nova" };
+            var endereco = new CreateEnderecoViewModel { PessoaId = new Randomizer().Long(0, 3000), Logradouro = "Rua Nova" };
 
             // Act
             var resultado = await _controller.CreateEndereco(endereco);
