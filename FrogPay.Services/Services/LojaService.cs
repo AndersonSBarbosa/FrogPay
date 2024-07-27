@@ -1,45 +1,39 @@
-﻿using FrogPay.Domain.Entities;
+﻿using AutoMapper;
+using FrogPay.Core.Exceptions;
+using FrogPay.Domain.Entities;
 using FrogPay.Repository.Interfaces;
 using FrogPay.Services.Interfaces;
+using FrogPay.Services.ViewModels.Loja;
 
 namespace FrogPay.Services.Services
 {
     public class LojaService : ILojaService
     {
         private readonly ILojaRepository _lojaRepository;
+        private readonly IMapper _mapper;
 
-        public LojaService(ILojaRepository lojaRepository)
+        public LojaService(ILojaRepository lojaRepository, IMapper mapper)
         {
             _lojaRepository = lojaRepository;
+            _mapper=mapper;
         }
 
-        public async Task CreateLojaAsync(Loja loja)
+        public async Task<Loja> CreateLojaAsync(CreateLojaViewModel loja)
         {
-            if (loja == null)
-            {
-                throw new ArgumentNullException(nameof(loja));
-            }
-            //if (loja.Id == Guid.Empty)
-            //{
-            //    loja.Id = Guid.NewGuid();
-            //}
             try
             {
-                await _lojaRepository.CreateAsync(loja);
+                    var item = _mapper.Map<Loja>(loja);
+                    var ItemCreated = await _lojaRepository.CreateAsync(item);
+                    return ItemCreated;
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Erro ao criar.", ex);
+                throw new ApplicationException("Erro ao criar o registro de Loja.", ex);
             }
         }
 
         public async Task<Loja> GetLojaByIdAsync(long id)
         {
-            //if (id == Guid.Empty)
-            //{
-            //    throw new ArgumentException("ID inválido", nameof(id));
-            //}
-
             try
             {
                 var loja = await _lojaRepository.GetAsync(id);
@@ -57,19 +51,22 @@ namespace FrogPay.Services.Services
             }
         }
 
-        public async Task UpdateLojaAsync(Loja loja)
+        public async Task<Loja> UpdateLojaAsync(UpdateLojaViewModel loja)
         {
-            if (loja == null)
-            {
-                throw new ArgumentNullException(nameof(loja));
-            }
-
             try
             {
-                await _lojaRepository.UpdateAsync(loja);
+                var itemExists = await GetLojaByIdAsync(loja.Id);
+
+                if (itemExists == null)
+                    throw new DomainExceptions("não existe Loja com esse ID informado!");
+
+                var itemUpdate = await _lojaRepository.UpdateAsync(_mapper.Map<Loja>(loja));
+
+                return itemUpdate;
             }
             catch (Exception ex)
             {
+                // Pode modificar para apresentar um retorno de erro mais detalhado
                 throw new ApplicationException("Erro ao atualizar a loja.", ex);
             }
         }

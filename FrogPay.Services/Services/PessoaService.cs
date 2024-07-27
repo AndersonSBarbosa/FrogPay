@@ -5,11 +5,6 @@ using FrogPay.Domain.Entities;
 using FrogPay.Repository.Interfaces;
 using FrogPay.Services.Interfaces;
 using FrogPay.Services.ViewModels.Pessoa;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrogPay.Services.Services
 {
@@ -27,8 +22,7 @@ namespace FrogPay.Services.Services
         }
 
         public async Task<Pessoa> CreatePessoaAsync(CreatePessoaViewModel pessoa)
-        {
-            
+        {           
             //Garantir a data de nascimento apenas dia/mes/ano
             pessoa.DataNascimento = pessoa.DataNascimento.Date;
 

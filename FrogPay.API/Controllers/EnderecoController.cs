@@ -4,6 +4,7 @@ using FrogPay.Domain.Entities;
 using FrogPay.Services.Interfaces;
 using FrogPay.Services.Services;
 using FrogPay.Services.ViewModels;
+using FrogPay.Services.ViewModels.Endereco;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -67,7 +68,7 @@ namespace FrogPay.API.Controllers
 
         // PUT: api/v1/endereco/{id}
         [HttpPut]
-        public async Task<IActionResult> UpdateEndereco(long id, [FromBody] Endereco endereco)
+        public async Task<IActionResult> UpdateEndereco([FromBody] UpdateEnderecoViewModel endereco)
         {
             try
             {

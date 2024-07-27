@@ -1,6 +1,10 @@
-﻿using FrogPay.Domain.Entities;
+﻿using AutoMapper;
+using FrogPay.Core.Exceptions;
+using FrogPay.Domain.Entities;
 using FrogPay.Repository.Interfaces;
+using FrogPay.Repository.Repositories;
 using FrogPay.Services.Interfaces;
+using FrogPay.Services.ViewModels.Endereco;
 
 namespace FrogPay.Services.Services
 {
@@ -9,37 +13,32 @@ namespace FrogPay.Services.Services
         {
             private readonly IPessoaService _pessoaService;
             private readonly IEnderecoRepository _enderecoRepository;
+            private readonly IMapper _mapper;
 
-            public EnderecoService(IPessoaService pessoaService, IEnderecoRepository enderecoRepository)
+            public EnderecoService(IPessoaService pessoaService, IEnderecoRepository enderecoRepository, IMapper mapper)
             {
                 _pessoaService = pessoaService;
                 _enderecoRepository = enderecoRepository;
+                _mapper=mapper;
             }
 
-            public async Task CreateEnderecoAsync(Endereco endereco)
+            public async Task<Endereco> CreateEnderecoAsync(CreateEnderecoViewModel endereco)
             {
-                if (endereco == null)
-                {
-                    throw new ArgumentNullException(nameof(endereco), "Endereço não pode ser nulo");
-                }
-
                 try
                 {
-                    await _enderecoRepository.CreateAsync(endereco);
+                    var item = _mapper.Map<Endereco>(endereco);
+                        var ItemCreated = await _enderecoRepository.CreateAsync(item);
+                    return ItemCreated;
                 }
+
                 catch (Exception ex)
                 {
-                    throw new ApplicationException("Erro ao criar o endereço", ex);
+                    throw new ApplicationException("Erro ao criar o registro de pessoa.", ex);
                 }
             }
 
             public async Task<Endereco> GetEnderecoByIdPessoa(long id)
             {
-                //if (id == Guid.Empty)
-                //{
-                //    throw new ArgumentException("ID inválido", nameof(id));
-                //}
-
                 try
                 {
                     var endereco = await _enderecoRepository.GetEnderecoByIdPessoaAsync(id);
@@ -78,20 +77,23 @@ namespace FrogPay.Services.Services
                 }
             }
 
-            public async Task UpdateEnderecoAsync(Endereco endereco)
+            public async Task<Endereco> UpdateEnderecoAsync(UpdateEnderecoViewModel endereco)
             {
-                if (endereco == null)
-                {
-                    throw new ArgumentNullException(nameof(endereco), "Endereço não pode ser nulo");
-                }
-
                 try
                 {
-                    await _enderecoRepository.UpdateAsync(endereco);
+                    var itemExists = await GetEnderecoByIdPessoa(endereco.Id);
+
+                    if (itemExists == null)
+                        throw new DomainExceptions("não existe usuario com esse ID informado!");
+
+                    var itemUpdate = await _enderecoRepository.UpdateAsync(_mapper.Map<Endereco>(endereco));
+
+                    return itemUpdate;
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException("Erro ao atualizar o endereço", ex);
+                    // Pode modificar para apresentar um retorno de erro mais detalhado
+                    throw new ApplicationException("Erro ao atualizar a pessoa.", ex);
                 }
             }
         }

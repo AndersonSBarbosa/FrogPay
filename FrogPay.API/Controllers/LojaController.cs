@@ -68,7 +68,7 @@ namespace FrogPay.API.Controllers
 
         // PUT: api/loja
         [HttpPut]
-        public async Task<IActionResult> UpdateLoja([FromBody] Loja loja)
+        public async Task<IActionResult> UpdateLoja([FromBody] UpdateLojaViewModel loja)
         {
             try
             {
