@@ -1,4 +1,6 @@
--- DROP TABLE IF EXISTS public."DadosBancario";
+CREATE DATABASE DBFrogPay
+
+--DROP TABLE IF EXISTS public."DadosBancario";
 
 CREATE TABLE IF NOT EXISTS public."DadosBancario"
 (
@@ -21,7 +23,7 @@ ALTER TABLE IF EXISTS public."DadosBancario"
 	
 -- Table: public.Endereco
 
--- DROP TABLE IF EXISTS public."Endereco";
+--DROP TABLE IF EXISTS public."Endereco";
 
 CREATE TABLE IF NOT EXISTS public."Endereco"
 (
@@ -45,7 +47,7 @@ ALTER TABLE IF EXISTS public."Endereco"
 
 -- Table: public.Loja
 
--- DROP TABLE IF EXISTS public."Loja";
+--DROP TABLE IF EXISTS public."Loja";
 
 CREATE TABLE IF NOT EXISTS public."Loja"
 (
