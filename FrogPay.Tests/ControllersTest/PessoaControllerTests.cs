@@ -17,7 +17,7 @@ namespace FrogPay.Tests.ControllersTest
         public PessoaControllerTests()
         {
             _pessoaServiceMock = new Mock<IPessoaService>();
-            _controller = new PessoaController(_pessoaServiceMock.Object);
+            //_controller = new PessoaController(_pessoaServiceMock.Object);
         }
 
         [Fact]

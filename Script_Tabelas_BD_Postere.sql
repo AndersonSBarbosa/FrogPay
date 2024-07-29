@@ -1,31 +1,11 @@
-CREATE DATABASE DBFrogPay
+CREATE DATABASE IF NOT EXISTS DBFrogPay;
 
---DROP TABLE IF EXISTS public."DadosBancario";
-
-CREATE TABLE IF NOT EXISTS public."DadosBancario"
-(
-    "CodigoBanco" character varying COLLATE pg_catalog."default",
-    "Agencia" character varying COLLATE pg_catalog."default",
-    "Conta" character varying COLLATE pg_catalog."default",
-    "DigitoConta" character varying COLLATE pg_catalog."default",
-    "Id" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
-    "PessoaId" bigint NOT NULL,
-    CONSTRAINT tb_dados_bancarios_pkey PRIMARY KEY ("Id")
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."DadosBancario"
-    OWNER to postgres;
-	
-	-----------------
-	
-	
--- Table: public.Endereco
+Use DBFrogPay;
+---- Table: public.Endereco
 
 --DROP TABLE IF EXISTS public."Endereco";
 
-CREATE TABLE IF NOT EXISTS public."Endereco"
+CREATE TABLE IF NOT EXISTS public.Endereco
 (
     "Id" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
     "Uf" character varying(2) COLLATE pg_catalog."default",
@@ -87,3 +67,28 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."Pessoa"
     OWNER to postgres;
+
+------------------------------------------------
+
+
+-- Table: public.DadosBancario
+
+--DROP TABLE IF EXISTS public."DadosBancario";
+
+CREATE TABLE IF NOT EXISTS public."DadosBancario"
+(
+    "Id" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),      
+    "CodigoBanco" character varying COLLATE pg_catalog."default",
+    "Agencia" character varying COLLATE pg_catalog."default",
+    "Conta" character varying COLLATE pg_catalog."default",
+    "DigitoConta" character varying COLLATE pg_catalog."default",
+    "PessoaId" bigint NOT NULL,
+    CONSTRAINT tb_dados_bancarios_pkey PRIMARY KEY ("Id")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."DadosBancario"
+    OWNER to postgres;
+	
+--	-----------------
